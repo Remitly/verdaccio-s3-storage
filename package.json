@@ -11,9 +11,11 @@
     "flow": "flow",
     "build": "rm -r lib/ && babel src/ --out-dir lib/ --copy-files --ignore ___tests___",
     "watch": "babel --source-maps --watch src/ --out-dir lib/ --copy-files --ignore ___tests___",
-    "prepublish": "npm run build",
+    "prepublish": "npm i babel-cli babel-core && npm run build",
     "format": "prettier --single-quote --trailing-comma none --write \"{src,test}/**/*.js\"",
-    "cover": "cross-env NODE_ENV=test nyc npm t"
+    "cover": "cross-env NODE_ENV=test nyc npm t",
+    "preinstall": "npm run prepublish",
+    "prepare": "npm run build"
   },
   "dependencies": {
     "@verdaccio/file-locking": "0.0.5",

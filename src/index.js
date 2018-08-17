@@ -108,29 +108,27 @@ export default class S3Database implements ILocalData {
   }
 
   async _getData(): Promise<LocalStorage> {
-    if (!this._localData) {
-      this._localData = await new Promise((resolve, reject) => {
-        this.s3.getObject(
-          {
-            Bucket: this.config.bucket,
-            Key: `${this.config.keyPrefix}verdaccio-s3-db.json`
-          },
-          (err, response) => {
-            if (err) {
-              const s3Err = convertS3Error(err);
-              if (is404Error(s3Err)) {
-                resolve({ list: [], secret: '' });
-              } else {
-                reject(err);
-              }
-              return;
+    this._localData = await new Promise((resolve, reject) => {
+      this.s3.getObject(
+        {
+          Bucket: this.config.bucket,
+          Key: `${this.config.keyPrefix}verdaccio-s3-db.json`
+        },
+        (err, response) => {
+          if (err) {
+            const s3Err = convertS3Error(err);
+            if (is404Error(s3Err)) {
+              resolve({ list: [], secret: '' });
+            } else {
+              reject(err);
             }
-            const data = JSON.parse(response.Body.toString());
-            resolve(data);
+            return;
           }
-        );
-      });
-    }
+          const data = JSON.parse(response.Body.toString());
+          resolve(data);
+        }
+      );
+    });
     return this._localData;
   }
 }
