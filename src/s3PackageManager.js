@@ -237,21 +237,22 @@ export default class S3PackageManager implements ILocalPackageManager {
         // verdaccio force garbage collects a stream on 404, so we can't emit more
         // than one error or it'll fail
         // https://github.com/verdaccio/verdaccio/blob/c1bc261/src/lib/storage.js#L178
+        if (statusCode !== 404) {
+          if (headers['content-length']) {
+            const contentLength = parseInt(headers['content-length'], 10);
 
-        if (headers['content-length']) {
-          const contentLength = parseInt(headers['content-length'], 10);
+            // not sure this is necessary
+            if (headersSent) {
+              console.log('********* headers already sent');
+              return;
+            }
 
-          // not sure this is necessary
-          if (headersSent) {
-            console.log('********* headers already sent');
-            return;
+            headersSent = true;
+
+            readTarballStream.emit('content-length', contentLength);
+            // we know there's content, so open the stream
+            readTarballStream.emit('open');
           }
-
-          headersSent = true;
-
-          readTarballStream.emit('content-length', contentLength);
-          // we know there's content, so open the stream
-          readTarballStream.emit('open');
         }
       })
       .createReadStream();
