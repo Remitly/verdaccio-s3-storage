@@ -1,6 +1,6 @@
 // @flow
 
-import type { LocalStorage, Logger, Config, Callback } from '@verdaccio/types';
+import type { LocalStorage, Logger, Callback, PluginOptions } from '@verdaccio/types';
 import type { ILocalData } from '@verdaccio/local-storage';
 import { S3 } from 'aws-sdk';
 import type { S3Config } from './config';
@@ -13,8 +13,8 @@ export default class S3Database implements ILocalData {
   s3: S3;
   _localData: ?LocalStorage;
 
-  constructor(config: Config, logger: Logger) {
-    this.logger = logger;
+  constructor(config: S3Config, options: PluginOptions) {
+    this.logger = options.logger;
     // copy so we don't mutate
     if (!config) {
       throw new Error('s3 storage missing config. Add `store.s3-storage` to your config file');
@@ -105,6 +105,11 @@ export default class S3Database implements ILocalData {
   // returns an instance of a class managing the storage for a single package
   getPackageStorage(packageName: string): S3PackageManager {
     return new S3PackageManager(this.config, packageName, this.logger);
+  }
+
+  search(onPackage: Callback, onEnd: Callback, validateName: any): void {
+    // TODO: search might be implemented here
+    onEnd();
   }
 
   async _getData(): Promise<LocalStorage> {

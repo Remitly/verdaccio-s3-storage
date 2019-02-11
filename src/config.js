@@ -1,6 +1,7 @@
 // @flow
+import type { Config } from '@verdaccio/types';
 
-export interface S3Config {
+export interface S3Config extends Config {
   bucket: string;
   keyPrefix: string;
   endpoint?: string;

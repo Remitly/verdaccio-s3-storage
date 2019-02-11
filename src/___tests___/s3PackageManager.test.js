@@ -9,6 +9,7 @@ import { deleteKeyPrefix } from '../deleteKeyPrefix';
 import logger from './__mocks__/Logger';
 import pkg from './__fixtures__/pkg';
 import { create404Error, create409Error, is404Error } from '../s3Errors';
+import { S3Config } from '../config';
 
 const pkgFileName: string = 'package.json';
 
@@ -21,7 +22,8 @@ describe('S3 package manager', () => {
     throw new Error('no bucket specified via VERDACCIO_TEST_BUCKET env var');
   }
 
-  const config = {
+  // $FlowFixMe
+  const config: S3Config = {
     bucket,
     keyPrefix: `${keyPrefix}/`
   };

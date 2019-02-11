@@ -7,6 +7,7 @@ import Config from './__mocks__/Config';
 import logger from './__mocks__/Logger';
 import { deleteKeyPrefix } from '../deleteKeyPrefix';
 import { is404Error } from '../s3Errors';
+import type {  PluginOptions } from '@verdaccio/types';
 
 describe('Local Database', () => {
   let db: ILocalData;
@@ -28,7 +29,8 @@ describe('Local Database', () => {
         }
       }
     });
-    db = new S3Database(config, logger);
+    const options: PluginOptions = { logger, config };
+    db = new S3Database(config, options);
   });
 
   afterEach(async () => {
