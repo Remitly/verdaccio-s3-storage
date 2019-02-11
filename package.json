@@ -9,7 +9,7 @@
     "lint": "npm run flow && eslint .",
     "commitmsg": "commitlint -e $GIT_PARAMS",
     "flow": "flow",
-    "build": "rm -r lib/ && babel src/ --out-dir lib/ --copy-files --ignore ___tests___",
+    "build": "babel src/ --out-dir lib/ --copy-files --ignore ___tests___",
     "watch": "babel --source-maps --watch src/ --out-dir lib/ --copy-files --ignore ___tests___",
     "prepublish": "npm run build",
     "format": "prettier --single-quote --trailing-comma none --write \"{src,test}/**/*.js\"",
