@@ -28,7 +28,9 @@ export default class S3Database implements ILocalData {
     this.s3 = new S3({
       endpoint: this.config.endpoint,
       region: this.config.region,
-      s3ForcePathStyle: this.config.s3ForcePathStyle
+      s3ForcePathStyle: this.config.s3ForcePathStyle,
+      accessKeyId: this.config.accessKeyId,
+      secretAccessKey: this.config.secretAccessKey
     });
   }
 
