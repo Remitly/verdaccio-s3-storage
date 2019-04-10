@@ -22,21 +22,13 @@ export default class S3PackageManager implements ILocalPackageManager {
     this.config = config;
     this.packageName = packageName;
     this.logger = logger;
-    if(this.config.accessKeyId && this.config.secretAccessKey){
-      this.s3 = new S3({
-        endpoint: this.config.endpoint,
-        region: this.config.region,
-        s3ForcePathStyle: this.config.s3ForcePathStyle,
-        accessKeyId: this.config.accessKeyId,
-        secretAccessKey: this.config.secretAccessKey
-      });
-    }else{
-      this.s3 = new S3({
-        endpoint: this.config.endpoint,
-        region: this.config.region,
-        s3ForcePathStyle: this.config.s3ForcePathStyle
-      });
-    }
+    this.s3 = new S3({
+      endpoint: this.config.endpoint,
+      region: this.config.region,
+      s3ForcePathStyle: this.config.s3ForcePathStyle,
+      accessKeyId: this.config.accessKeyId,
+      secretAccessKey: this.config.secretAccessKey
+    });
   }
 
   updatePackage(name: string, updateHandler: Callback, onWrite: Callback, transformPackage: Function, onEnd: Callback) {
