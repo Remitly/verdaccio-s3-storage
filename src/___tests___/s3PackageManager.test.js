@@ -245,6 +245,10 @@ describe('S3 package manager', () => {
       const packageManager = new S3PackageManager(config, 'readme-test', logger);
       const readTarballStream = packageManager.readTarball('file-does-not-exist-0.0.0.tgz');
 
+      readTarballStream.on('data', data => {
+        expect(data).not.toBeDefined();
+      });
+
       readTarballStream.on('error', function(err) {
         expect(err).toBeTruthy();
         done();
