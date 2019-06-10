@@ -240,7 +240,7 @@ export default class S3PackageManager implements ILocalPackageManager {
         // than one error or it'll fail
         // https://github.com/verdaccio/verdaccio/blob/c1bc261/src/lib/storage.js#L178
 
-        if (headers['content-length']) {
+        if (statusCode !== 404 && headers['content-length']) {
           const contentLength = parseInt(headers['content-length'], 10);
 
           // not sure this is necessary
