@@ -229,9 +229,9 @@
     lockfile "1.0.3"
     lodash "4.17.4"
 
-"@verdaccio/streams@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/@verdaccio/streams/-/streams-1.0.0.tgz#d5d24c6747208728b9fd16b908e3932c3fb1f864"
+"@verdaccio/streams@8.5.2":
+  version "8.5.2"
+  resolved "https://registry.yarnpkg.com/@verdaccio/streams/-/streams-8.5.2.tgz#d6f366f94b905bb945bcdfa1572fde8e09f53d7a"
 
 "@verdaccio/types@2.2.0":
   version "2.2.0"

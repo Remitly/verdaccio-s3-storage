@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@verdaccio/file-locking": "0.0.5",
-    "@verdaccio/streams": "1.0.0",
+    "@verdaccio/streams": "8.5.2",
     "async": "2.6.0",
     "aws-sdk": "^2.229.1"
   },
