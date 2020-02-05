@@ -2,6 +2,8 @@
 
 📦 AWS S3 storage plugin for verdaccio 
 
+**Deprecated** This package has been migrated into the verdaccio core monorepo. Please use [`verdaccio-aws-s3-storage`](https://github.com/verdaccio/monorepo/tree/master/plugins/aws-s3-storage) instead.
+
 ### Requirements
 
 * AWS Account
