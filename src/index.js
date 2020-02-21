@@ -109,6 +109,40 @@ export default class S3Database implements ILocalData {
     return new S3PackageManager(this.config, packageName, this.logger);
   }
 
+  async search(onPackage: Function, onEnd: Function, validateName: Function) {
+    const storage = await this._getData();
+    const storageInfoMap = storage.list.map(this._fetchPackageInfo.bind(this, onPackage));
+    await Promise.all(storageInfoMap);
+    onEnd();
+  }
+
+  async _fetchPackageInfo(onPackage: Function, packageName: string) {
+    return new Promise(resolve => {
+      this.s3.headObject(
+        {
+          Bucket: this.config.bucket,
+          Key: `${this.config.keyPrefix + packageName}/package.json`
+        },
+        (err, response) => {
+          if (err) {
+            return resolve();
+          }
+          if (response.LastModified) {
+            return onPackage(
+              {
+                name: packageName,
+                path: packageName,
+                time: response.LastModified.getTime()
+              },
+              resolve
+            );
+          }
+          resolve();
+        }
+      );
+    });
+  }
+
   async _getData(): Promise<LocalStorage> {
     if (!this._localData) {
       this._localData = await new Promise((resolve, reject) => {
